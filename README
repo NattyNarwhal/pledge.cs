@@ -20,3 +20,8 @@ execute it to see if it's working. You can then use `mono pledgetest.exe`
 and pass it promises to execute with those promises. You should be able to
 see its messages as it outputs to stdout unpledged, pledges, and then outputs
 to stdio again, with pledge.
+
+# TODO
+
+* It would be nice if we could have some kind of type safety for promises,
+  and guarantee the minimum for the runtime.
