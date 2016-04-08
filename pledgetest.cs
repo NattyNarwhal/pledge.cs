@@ -15,6 +15,8 @@
  */
 
 using System;
+using System.ComponentModel;
+using Mono.Unix.Native;
 
 namespace OpenBSD
 {
@@ -23,8 +25,21 @@ namespace OpenBSD
         public static void Main(string[] args)
         {
             Console.WriteLine("Pledging...");
-            Pledge.Init(string.Join(" ", args));
-            Console.WriteLine("Pledged!");
+            try 
+            {
+                Pledge.Init(string.Join(" ", args));
+                Console.WriteLine("Pledged!");
+            }
+            catch (Win32Exception e)
+            {
+                Console.WriteLine("pledge(2) encountered an error: {0}\n\t{1}",
+                    (Errno)e.NativeErrorCode, e.Message);
+            }
+            catch
+            {
+                Console.WriteLine("Your system ({0}) is not supported.",
+                    Environment.OSVersion);
+            }
         }
     }
 }
