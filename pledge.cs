@@ -30,7 +30,7 @@ namespace OpenBSD
         /// </summary>
         /// <param name="promises">The list of privleges to drop to.</param>
         /// <param name="paths">The list of paths to allow access to.</param>
-        public static void Init(string promises, string paths)
+        public static void Init(string promises, string[] paths)
         {
             // check for if it's not unix, not openbsd, not openbsd 5.9
             if (Environment.OSVersion.Platform != PlatformID.Unix
@@ -39,7 +39,7 @@ namespace OpenBSD
             {
                 throw new PlatformNotSupportedException("pledge(2) is only supported by OpenBSD.");
             }
-            if (pledge(promises, null) == -1)
+            if (pledge(promises, paths) == -1)
             {
                 Errno e = (Errno)Marshal.GetLastWin32Error();
                 switch (e)
