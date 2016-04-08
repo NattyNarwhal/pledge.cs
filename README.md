@@ -10,8 +10,24 @@ it'll crash on exit.
 
 # Building info:
 
+The only dependencies are Mono (4.2.1 from packages on OpenBSD 5.9 works
+fine - it'll very likely work on older versions of Mono, possibly by
+changing the compiler.) and `Mono.Posix`.
+
 Just type `make`. The library and documentation will be created, ready to
-install into the GAC or for distribution.
+install into the GAC or for distribution. In addition, XML documentation
+is created as well.
+
+# Using
+
+After it's built, you can simply link in `pledge.dll`. `pledgetest.cs`
+contains usage examples and handling the exceptions it throws in the event
+your code isn't running on a new enough version of OpenBSD or it pledge
+itself encounters an error.
+
+# Licensing
+
+The license is the same as OpenBSD's. See the comments in the source.
 
 # Testing 
 
