@@ -11,4 +11,4 @@ test: pledgetest.exe
 	$(MONO) pledgetest.exe stdio vminfo cpath
 
 clean:
-	rm *.exe *.dll *.xml *.core
+	rm -f *.exe *.dll *.xml *.core
