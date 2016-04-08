@@ -35,7 +35,7 @@ namespace OpenBSD
                 Console.WriteLine("pledge(2) encountered an error: {0}\n\t{1}",
                     (Errno)e.NativeErrorCode, e.Message);
             }
-            catch
+            catch (PlatformNotSupportedException)
             {
                 Console.WriteLine("Your system ({0}) is not supported.",
                     Environment.OSVersion);
