@@ -59,7 +59,7 @@ namespace OpenBSD
                 || !IsOpenBSD()
                 || Environment.OSVersion.Version < new Version(5, 9))
             {
-                throw new PlatformNotSupportedException("pledge(2) is only supported by OpenBSD.");
+                throw new PlatformNotSupportedException("pledge(2) is only supported by OpenBSD 5.9 or later.");
             }
             if (pledge(promises, paths) == -1)
             {
@@ -67,7 +67,7 @@ namespace OpenBSD
                 switch (e)
                 {
                     case Errno.E2BIG:
-                        throw new Win32Exception((int)e, "The paths array is tooo large.");
+                        throw new Win32Exception((int)e, "The paths array is too large.");
                     case Errno.EINVAL:
                         throw new Win32Exception((int)e, "The promises are malformed or invalid.");
                     case Errno.EPERM:
