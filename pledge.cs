@@ -69,7 +69,17 @@ namespace OpenBSD
                     case Errno.E2BIG:
                         throw new Win32Exception((int)e, "The paths array is too large.");
                     case Errno.EINVAL:
-                        throw new Win32Exception((int)e, "The promises are malformed or invalid.");
+                        // 5.9 doesn't support paths
+                        if (paths != null && Environment.OSVersion.Version.Major == 5)
+                        {
+                            throw new Win32Exception((int)e,
+                                "Path restrictions are not supported by this version of OpenBSD.");
+                        }
+                        else
+                        {
+                            throw new Win32Exception((int)e,
+                                "The promises are malformed or invalid.");
+                        }
                     case Errno.EPERM:
                         throw new Win32Exception((int)e, "The process is trying to increase permissions.");
                     case Errno.ENAMETOOLONG:
