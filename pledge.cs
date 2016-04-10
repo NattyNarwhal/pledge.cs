@@ -43,6 +43,30 @@ namespace OpenBSD
         }
 
         /// <summary>
+        /// Gets if the process has been pledged.
+        /// </summary>
+        public static bool IsPledged
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Gets the current privleges the program has pledged to.
+        /// </summary>
+        public static string Promises
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Gets the current paths the program has pledged to.
+        /// </summary>
+        public static string[] Paths
+        {
+            get; private set;
+        }
+
+        /// <summary>
         /// Use OpenBSD's pledge(2) syscall to reduce process privleges.
         /// </summary>
         /// <param name="promises">The list of privleges to drop to.</param>
@@ -96,6 +120,12 @@ namespace OpenBSD
                         throw new Win32Exception((int)e,
                             "The system has thrown an unknown error.");
                 }
+            }
+            else
+            {
+                IsPledged = true;
+                Promises = promises;
+                Paths = paths;
             }
         }
 

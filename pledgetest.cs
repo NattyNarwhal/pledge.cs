@@ -28,7 +28,7 @@ namespace OpenBSD
             try 
             {
                 Pledge.Init(string.Join(" ", args));
-                Console.WriteLine("Pledged!");
+                Console.WriteLine("Pledged to: {0}", Pledge.Promises);
             }
             catch (Win32Exception e)
             {
