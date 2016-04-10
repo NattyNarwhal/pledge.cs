@@ -52,3 +52,5 @@ something forbidden (like outputting to stdio) you'll see it fail.
 
 * It would be nice if we could have some kind of type safety for promises,
   and guarantee the minimum for the runtime.
+* Managed code sanity-checking before we make the syscall.
+* Support other OpenBSD specific APIs. (like sendsyslog)
