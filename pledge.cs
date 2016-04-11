@@ -51,7 +51,7 @@ namespace OpenBSD
         }
 
         /// <summary>
-        /// Gets the current privleges the program has pledged to.
+        /// Gets the current privleges the program has dropped to.
         /// </summary>
         public static string Promises
         {
@@ -59,7 +59,7 @@ namespace OpenBSD
         }
 
         /// <summary>
-        /// Gets the current paths the program has pledged to.
+        /// Gets the current paths the program has dropped to.
         /// </summary>
         public static string[] Paths
         {
