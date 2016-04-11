@@ -72,7 +72,7 @@ namespace OpenBSD
         /// <param name="promises">The list of privleges to drop to.</param>
         /// <param name="paths">The list of paths to allow access to.</param>
         /// <exception cref="PlatformNotSupportedException">
-        /// Thrown if the the current OS isn't OpenBSD.
+        /// Thrown if the the current OS isn't OpenBSD or the version is too old.
         /// </exception>
         /// <exception cref="Win32Exception">
         /// Thrown if pledge returns an error.
@@ -86,6 +86,13 @@ namespace OpenBSD
                 throw new PlatformNotSupportedException
                     ("pledge(2) is only supported by OpenBSD 5.9 or later.");
             }
+            // 5.9 doesn't support paths
+            if (paths != null && Environment.OSVersion.Version.Major == 5)
+            {
+                throw new PlatformNotSupportedException
+                    ("Path restrictions are not supported by this version of OpenBSD.");
+            }
+
             if (pledge(promises, paths) == -1)
             {
                 Errno e = (Errno)Marshal.GetLastWin32Error();
@@ -95,17 +102,8 @@ namespace OpenBSD
                         throw new Win32Exception((int)e,
                             "The paths array is too large.");
                     case Errno.EINVAL:
-                        // 5.9 doesn't support paths
-                        if (paths != null && Environment.OSVersion.Version.Major == 5)
-                        {
-                            throw new Win32Exception((int)e,
-                                "Path restrictions are not supported by this version of OpenBSD.");
-                        }
-                        else
-                        {
-                            throw new Win32Exception((int)e,
-                                "The promises are malformed or invalid.");
-                        }
+                        throw new Win32Exception((int)e,
+                            "The promises are malformed or invalid.");
                     case Errno.EPERM:
                         throw new Win32Exception((int)e,
                             "The process is trying to increase permissions.");
@@ -133,7 +131,7 @@ namespace OpenBSD
         /// </summary>
         /// <param name="promises">The list of privleges to drop to.</param>
         /// <exception cref="PlatformNotSupportedException">
-        /// Thrown if the the current OS isn't OpenBSD.
+        /// Thrown if the the current OS isn't OpenBSD or the version is too old.
         /// </exception>
         /// <exception cref="Win32Exception">
         /// Thrown if pledge returns an error.
