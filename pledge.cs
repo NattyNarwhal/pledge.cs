@@ -80,8 +80,7 @@ namespace OpenBSD
         public static void Init(string promises, string[] paths)
         {
             // check for if it's not unix, not openbsd, not openbsd 5.9
-            if (Environment.OSVersion.Platform != PlatformID.Unix
-                || !IsOpenBSD()
+            if (!IsOpenBSD()
                 || Environment.OSVersion.Version < new Version(5, 9))
             {
                 throw new PlatformNotSupportedException
