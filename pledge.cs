@@ -77,7 +77,7 @@ namespace OpenBSD
         /// <exception cref="Win32Exception">
         /// Thrown if pledge returns an error.
         /// </exception>
-        public static void Init(string promises, string[] paths)
+        public static void Init(string promises, string[] paths = null)
         {
             // check for if it's not unix, not openbsd, not openbsd 5.9
             if (!IsOpenBSD()
@@ -124,21 +124,6 @@ namespace OpenBSD
                 Promises = promises;
                 Paths = paths;
             }
-        }
-
-        /// <summary>
-        /// Uses OpenBSD's pledge(2) syscall to reduce process privleges.
-        /// </summary>
-        /// <param name="promises">The list of privleges to drop to.</param>
-        /// <exception cref="PlatformNotSupportedException">
-        /// Thrown if the the current OS isn't OpenBSD or the version is too old.
-        /// </exception>
-        /// <exception cref="Win32Exception">
-        /// Thrown if pledge returns an error.
-        /// </exception>
-        public static void Init(string promises)
-        {
-            Init(promises, null);
         }
     }
 }
